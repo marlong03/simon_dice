@@ -1,0 +1,348 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&family=RocknRoll+One&display=swap" rel="stylesheet">
+    <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="medias.css">
+    <title>Simon Dice</title>
+   
+    
+    <style>
+     *{
+      font-family:  'Press Start 2P', cursive;
+      
+
+     }
+      
+      body {
+        margin: 0 auto;
+        background: #2c2c2c;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        
+      }
+      main{
+       
+        margin: 0 auto;
+        background: inherit;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 100vw;
+        text-align: center;
+        
+      
+      }
+header{
+  height:120px;
+  
+}
+header h1{
+  font-size: 30px;
+  font-family: 'RocknRoll One', sans-serif;
+  color:white;
+  position:absolute;
+  left : 80px;
+  border:2px solid white;
+  padding:10px 20px 10px; 
+}
+      .gameboard {
+       
+        height: 100vw;
+        width: 100vw;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 20px auto;
+        max-height: 60vh;
+        max-width: 60vh;
+        
+      }
+
+      .color {
+        width: 50%;
+        height: 50%;
+        display: inline-block;
+      }
+
+      .left {
+        float: left;
+      }
+
+      .right {
+        float: left;
+      }
+
+      .celeste {
+        background: #ee5e29;
+        transition: transform .5s ease;
+      }
+
+      .celeste.light {
+        background: #fd975c;
+        transition: transform .5s ease;
+      }
+
+      .violeta {
+        background: #e2c000;
+        transition: transform .5s ease;
+      }
+
+      .violeta.light {
+        background: #ffe15c;
+        transition: transform .5s ease;
+      }
+
+      .naranja {
+        background: #4fb487;
+        transition: transform .5s ease;
+      }
+
+      .naranja.light {
+        background: #95d5b2;
+        transition: transform .5s ease;
+      }
+
+      .verde {
+        background: #4361ee;
+        transition: transform .5s ease;
+      }
+
+      .verde.light {
+        background: #4ca6f0;
+        transition: transform .5s ease;
+      }
+
+      .btn-start {
+        padding:20px 10%;
+        background: #5a5a5a;
+        color: #ffffff;
+        font-size: 45px;
+        margin:0 auto;
+        transition: transform .5s ease;
+        border:none;
+        border-radius: 10px;
+        font-family:  'Press Start 2P', cursive;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+       position: absolute;
+       
+        outline:none;
+      }
+      .btn-start:hover{
+       transform : scale(1.2)
+      }
+
+     
+      .perdiste{
+        width:400px;
+        height: 400px;
+        color:white;
+        background-color:red;
+        position:absolute;
+        
+        border-radius: 60%;
+        text-align: center;
+        font-family:  'Press Start 2P', cursive;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+
+      }
+      .hide {
+        display: none;
+      }
+      /* .division {
+        width:100vw;
+        height: 100vh;
+        margin:0 auto;
+        text-align: center;
+       display: flex;
+       align-items: center;
+        border:1px solid red;
+      } */
+    
+      
+    </style>
+  <!-- <script async src='/cdn-cgi/bm/cv/669835187/api.js'></script> --></head>
+  <body>
+    <header>
+      <h1>Simon Dice</h1>
+    </header>
+    <main>
+    <div class="gameboard " id ="gameboard">
+      <div id="verde" class="color verde right" data-color="verde"></div>
+      <div id="celeste" class="color celeste left" data-color="celeste"></div>
+      <div id="violeta" class="color violeta right" data-color="violeta"></div>
+      <div id="naranja" class="color naranja left" data-color="naranja"></div>
+    </div>
+      
+        <button id="btnEmpezar" class="btn-start" onclick="empezarJuego()">Play </button>
+     
+      <div id="perder" class="perdiste hide"><h1>Game Over</h1></div>
+    </main>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+        <script>
+
+            var btnEmpezar = document.getElementById("btnEmpezar")
+            const celeste = document.getElementById("celeste") 
+            const violeta = document.getElementById("violeta") 
+            const naranja = document.getElementById("naranja") 
+            const perder = document.getElementById("perder") 
+            
+            const ULTIMO_NIVEL =12;
+           
+
+            
+
+    class juego{
+        constructor(){
+            this.inicializar()
+            this.generarSecuencia ()
+            this.siguienteNivel()
+        }
+        inicializar(){
+          
+          toggleBtn()
+          this.elegirColor = this.elegirColor.bind(this)
+            this.nivel = 1;
+            this.colores={
+                celeste,
+                violeta,
+                naranja,
+                verde
+            }
+        }
+        generarSecuencia(){
+         
+
+            this.secuencia = new Array (ULTIMO_NIVEL).fill(0).map(x => Math.floor(Math.random()*4))
+            
+            //.fill genera un array con 10 valores
+            // con un valor dentro de ellos
+                //este fill con valor 0 en cada map se genera prque el map
+                // no funciona si el array no lleva contenido
+        }
+        siguienteNivel(){
+          //agregar atributos :
+          //this.nombreAtributo = "valor"
+          this.subNivel = 0
+            this.iluminarSecuencia()
+            this.agregarEventoClick()
+        }
+
+        transformarNumeroAColor(numero){
+            switch (numero) {
+                case 0:
+                    return "celeste"
+                case 1 :
+                    return "violeta"
+                case 2:
+                    return "naranja"
+                case 3: 
+                    return "verde"  
+            }
+        }
+
+        transformarColorANumero(color){
+            switch (color) {
+                case "celeste":
+                    return 0
+                case "violeta" :
+                    return 1
+                case "naranja":
+                    return 2 
+                case "verde": 
+                    return  3 
+            }
+        }
+        iluminarSecuencia(){
+            for(let i=0;i<this.nivel;i++){
+                const color = this.transformarNumeroAColor(this.secuencia[i])
+                console.log(color);
+                setTimeout(() =>this.iluminarColor(color), 300*i);
+            }
+        }
+            iluminarColor(color){
+                this.colores[color].classList.add("light")
+                
+                setTimeout(() =>this.apagarColor(color) , 180 )
+            }
+            apagarColor(color){
+                    this.colores[color].classList.remove("light")
+                }
+                agregarEventoClick(){
+                  this.colores.celeste.addEventListener("click", this.elegirColor)
+                  this.colores.violeta.addEventListener("click", this.elegirColor)
+                  this.colores.naranja.addEventListener("click", this.elegirColor)
+                  this.colores.verde.addEventListener("click", this.elegirColor)
+                }
+                eliminarEventoClick(){
+                  this.colores.celeste.removeEventListener("click", this.elegirColor)
+                  this.colores.violeta.removeEventListener("click", this.elegirColor)
+                  this.colores.naranja.removeEventListener("click", this.elegirColor)
+                  this.colores.verde.removeEventListener("click", this.elegirColor)
+                }
+                elegirColor(x){
+                  console.log(x);
+                  const nombreColor = x.target.dataset.color
+                  const numeroColor = this.transformarColorANumero(nombreColor)
+                  this.iluminarColor(nombreColor)
+                  if(numeroColor ===this.secuencia[this.subNivel]){
+                    this.subNivel++
+                    if(this.subNivel===this.nivel){
+                    this.nivel++
+                  console.log(this.nivel);
+
+                    this.eliminarEventoClick()
+                    if(this.nivel === (ULTIMO_NIVEL + 1)){
+                      this.ganoElJuego()
+                    }else{
+                      setTimeout( this.siguienteNivel.bind(this) , 800);
+                    }
+                  }
+                  }else{
+                    this.perdioElJuego()
+                 
+                  }
+                }
+                ganoElJuego(){
+                  swal("¡Ganaste!","llegaste al nivel: " + this.nivel   ,"success")
+                  .then(x =>{
+                    
+                     this.inicializar()
+                  })}
+                  perdioElJuego(){
+                  swal("Perdiste :(","llegaste al nive: " + this.nivel,"error")
+                  .then(() =>{
+                     this.eliminarEventoClick()
+                     
+                  })
+                  .then(()=>this.inicializar())
+                }
+    }
+    
+
+    function toggleBtn(){
+      if(btnEmpezar.classList.contains("hide")){
+        btnEmpezar.classList.remove("hide")
+      }else{
+        btnEmpezar.classList.add("hide")
+        
+      }
+    }
+
+    function empezarJuego(){
+              var jugo = new juego ()
+    }
+        </script>
+    </body>
+    </html>

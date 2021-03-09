@@ -1,0 +1,40 @@
+@media (max-width:413px){
+    .btn-start {
+    padding:10px 10%;
+    background: #5a5a5a;
+    color: #ffffff;
+    font-size: 45px;
+    margin:0 auto;
+    transition: transform .5s ease;
+    border:none;
+    border-radius: 10px;
+    font-family:  'Press Start 2P', cursive;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+  
+   
+    outline:none;
+  }
+  header {
+      text-align: center;
+  }
+  main{
+       
+    margin: 0 auto;
+    background: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    text-align: center;
+    
+  
+  }
+
+  }
+  
+    
+ 
